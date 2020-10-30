@@ -1,3 +1,5 @@
+const { inspect } = require('util');
+
 exports.run = async (bot, message, args) => {
   const code = args.join(' ');
 
@@ -12,10 +14,10 @@ exports.run = async (bot, message, args) => {
   }
 
   try {
-    let evaled = await eval(`(async () => { ${code} })()`);
+    let evaled = await eval(`(async () => { ${code} })()`); // eslint-disable-line no-eval
 
     if (typeof evaled !== 'string') {
-      evaled = require('util').inspect(evaled);
+      evaled = inspect(evaled);
     }
 
     evaled = evaled

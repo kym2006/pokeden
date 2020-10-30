@@ -27,7 +27,7 @@ exports.run = async (bot, message, args) => {
     message.channel.createMessage({
       embed: {
         description: `\`\`\`${res.rows
-          .map((row) => JSON.stringify(row))
+          .map(row => JSON.stringify(row))
           .join('\n')
           .replace(new RegExp('`', 'g'), `\`${String.fromCharCode(8203)}`)
           .substr(0, 2000)}\`\`\``,
