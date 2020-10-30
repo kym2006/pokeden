@@ -60,6 +60,7 @@ exports.run = async (bot, message, args) => {
     color: bot.config.colors.primary
   };
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const category in commands) {
     if (commands[category].length === 0) continue;
 

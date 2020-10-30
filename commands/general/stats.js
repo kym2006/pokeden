@@ -1,7 +1,7 @@
-const os = require('os');
-const moment = require('moment');
+const { loadavg, cpus } = require('os');
+const { duration } = require('moment');
 require('moment-duration-format');
-const info = require('../../package.json');
+const { version, dependencies } = require('../../package.json');
 
 exports.run = async (bot, message) => {
   message.channel.createMessage({
@@ -10,17 +10,17 @@ exports.run = async (bot, message) => {
       fields: [
         {
           name: 'Owner',
-          value: 'waterflamev8#4123\nFlareonIsCute#1566\nkym2006#6342',
+          value: 'waterflamev8#4123\nFlareonIsCute#1566',
           inline: true
         },
         {
           name: 'Bot Version',
-          value: info.version,
+          value: version,
           inline: true
         },
         {
           name: 'Uptime',
-          value: moment.duration(bot.uptime).format('M[m] W[w] d[d] h[hr] m[m] s[s]'),
+          value: duration(bot.uptime).format('M[m] W[w] d[d] h[hr] m[m] s[s]'),
           inline: true
         },
         {
@@ -35,7 +35,7 @@ exports.run = async (bot, message) => {
         },
         {
           name: 'CPU Usage',
-          value: `${Math.round((os.loadavg()[0] / os.cpus().length) * 1000) / 10}%`,
+          value: `${Math.round((loadavg()[0] / cpus().length) * 1000) / 10}%`,
           inline: true
         },
         {
@@ -50,7 +50,7 @@ exports.run = async (bot, message) => {
         },
         {
           name: 'Eris Version',
-          value: info.dependencies.eris.slice(1),
+          value: dependencies.eris.slice(1),
           inline: true
         }
       ],
