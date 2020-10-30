@@ -9,13 +9,13 @@ module.exports = [
   },
   {
     level: 9,
-    check: (message) => {
+    check: message => {
       return config.admins.includes(message.author.id);
     }
   },
   {
     level: 10,
-    check: (message) => {
+    check: message => {
       return config.owners.includes(message.author.id);
     }
   }
