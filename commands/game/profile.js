@@ -33,7 +33,7 @@ exports.run = async (bot, message) => {
     } else {
       embed.fields.push({
         name: elem.charAt(0).toUpperCase() + elem.slice(1),
-        value: JSON.stringify(userInfo[elem]),
+        value: Array.isArray(userInfo[elem]) ? JSON.stringify(userInfo[elem]) : userInfo[elem],
         inline: true
       });
     }
