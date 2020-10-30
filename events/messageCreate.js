@@ -1,12 +1,13 @@
 const permission = require('../utils/permission.js');
 
 module.exports = async (bot, message) => {
-  if (!message) return;
+  if (!message || message.author.id === bot.user.id || message.author.bot) return;
 
   let command;
   let args;
   const prefixes = [`<@${bot.user.id}>`, `<@!${bot.user.id}>`, bot.config.prefix];
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const prefix of prefixes) {
     if (message.content.startsWith(prefix)) {
       args = message.content.slice(prefix.length).trim().split(' ');
@@ -41,6 +42,21 @@ module.exports = async (bot, message) => {
       }
     });
     return;
+  }
+
+  if (cmd.help.permLevel >= 9) {
+    bot.createMessage(bot.config.channels.adminLog, {
+      embed: {
+        title: cmd.help.name,
+        description: message.content,
+        color: bot.config.colors.primary,
+        author: {
+          name: `${message.author.username}#${message.author.discriminator} (${message.author.id})`,
+          icon_url: message.author.avatarURL
+        },
+        timestamp: new Date().toISOString()
+      }
+    });
   }
 
   message.permLevel = permLevel;
