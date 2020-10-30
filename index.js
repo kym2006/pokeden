@@ -1,7 +1,7 @@
-const fs = require('fs');
-const { Pool } = require('pg');
 const Enmap = require('enmap');
 const Eris = require('eris');
+const { Pool } = require('pg');
+const { readdirSync } = require('fs');
 const config = require('./config.json');
 
 const bot = new Eris(`Bot ${config.token}`, {
@@ -20,7 +20,6 @@ const bot = new Eris(`Bot ${config.token}`, {
 bot.config = config;
 bot.commands = new Enmap();
 bot.aliases = new Enmap();
-bot.locations = require('./locations.json');
 
 bot.getCommand = command => {
   if (bot.commands.has(command)) {
@@ -33,12 +32,12 @@ bot.getCommand = command => {
 };
 
 bot.loadCommands = () => {
-  const files = fs.readdirSync('./commands/');
+  const files = readdirSync('./commands/');
 
   files.forEach(f => {
     if (f.startsWith('.')) return;
 
-    const files2 = fs.readdirSync(`./commands/${f}/`);
+    const files2 = readdirSync(`./commands/${f}/`);
     files2.forEach(f2 => {
       if (f2.startsWith('.')) return;
 
@@ -61,7 +60,7 @@ bot.loadCommands = () => {
 };
 
 bot.loadEvents = () => {
-  const files = fs.readdirSync('./events/');
+  const files = readdirSync('./events/');
 
   files.forEach(f => {
     if (f.startsWith('.')) return;
