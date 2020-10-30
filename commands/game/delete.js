@@ -1,8 +1,8 @@
 const ReactionHandler = require('eris-reactions');
-const checks = require('../../utils/userDatabase.js');
+const { userInDatabase } = require('../../utils/checks.js');
 
 exports.run = async (bot, message) => {
-  if (!(await checks(bot, message.author.id))) {
+  if (!(await userInDatabase(bot, message.author.id))) {
     message.channel.createMessage({
       embed: {
         description: 'You have not registered for an account yet.',

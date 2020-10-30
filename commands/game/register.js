@@ -1,7 +1,7 @@
-const checks = require('../../utils/userDatabase.js');
+const { userInDatabase } = require('../../utils/checks.js');
 
 exports.run = async (bot, message) => {
-  if (await checks(bot, message.author.id)) {
+  if (await userInDatabase(bot, message.author.id)) {
     message.channel.createMessage({
       embed: {
         description: 'You have already registered for an account.',
@@ -16,9 +16,9 @@ exports.run = async (bot, message) => {
 
   message.channel.createMessage({
     embed: {
+      title: 'Successful Registration of Account',
       description:
         'Thank you for registering an account! Your account has been successfully registered. We hope you enjoy your time here!',
-      title: 'Successful Registration of Account',
       color: 65425,
       footer: {
         text: 'To proceed, type `$next`!'
@@ -31,7 +31,10 @@ exports.run = async (bot, message) => {
       }
     }
   });
-  bot.pool.query('INSERT INTO users(id, data) VALUES($1, $2)', [message.author.id, '{}']);
+  bot.pool.query('INSERT INTO users(id, info) VALUES($1, $2)', [
+    message.author.id,
+    '{ "level": 0, "location": 0, "progress": 0, "region": "Kanto", "pokedex": [], "money": 0, "items": [], "quests": [] }'
+  ]);
 };
 
 exports.help = {
